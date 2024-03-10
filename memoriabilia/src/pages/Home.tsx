@@ -4,7 +4,7 @@ function Home(){
     return (
         <>
         <div>
-            <h1>this is Home section</h1>
+            <div></div>
         </div>
         </>
     )
