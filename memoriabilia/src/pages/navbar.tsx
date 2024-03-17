@@ -57,80 +57,80 @@ export default function Navbar() {
 
                         <NavigationMenuList>
                             <NavigationMenuItem>
-                                <NavigationMenuTrigger className='text-lg'>Esportes</NavigationMenuTrigger>
+                                <NavigationMenuTrigger className='text-lg font-poppins'>Esportes</NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
-                                        Atletas
+                                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
+                                        <span className='text-lg font-poppins'>Atletas</span>
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
-                                        Miniatura Realista
+                                    <NavigationMenuLink className={`text-lg font-poppins ${navigationMenuTriggerStyle()}`}>
+                                    <span className='text-lg font-poppins'>Miniatura Realista</span>
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
-                                        Quadros
+                                    <NavigationMenuLink className={`text-lg font-poppins ${navigationMenuTriggerStyle()}`}>
+                                    <span className='text-lg font-poppins'>Quadros</span>
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
-                                        Jogo das Estrelas
+                                    <NavigationMenuLink className={`text-lg font-poppins ${navigationMenuTriggerStyle()}`}>
+                                    <span className='text-lg font-poppins'>Jogo das Estrelas</span>
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
-                                        Casa da Moeda do Brasil
+                                    <NavigationMenuLink className={`text-lg font-poppins ${navigationMenuTriggerStyle()}`}>
+                                    <span className='text-lg font-poppins'>Casa da Moeda do Brasil</span>
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
-                                        MDE Social
+                                    <NavigationMenuLink className={`text-lg font-poppins ${navigationMenuTriggerStyle()}`}>
+                                    <span className='text-lg font-poppins'>MDE Social</span>
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
-                                        Parceiros
+                                <NavigationMenuLink className={`text-lg font-poppins ${navigationMenuTriggerStyle()}`}>
+                                <span className='text-lg font-poppins'>Parceiros</span>
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
-                                        Artigos
+                                    <NavigationMenuLink className={`text-lg font-poppins ${navigationMenuTriggerStyle()}`}>
+                                    <span className='text-lg font-poppins'>Artigos</span>
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                         </NavigationMenuList>
-                        <NavigationMenu className='ml-10'>
+                        <NavigationMenu className='ml-36'>
                             <NavigationMenuList>
                                 <NavigationMenuItem>
                                     <Link href="/docs">
-                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
-                                            Minha Conta
+                                    <NavigationMenuLink className={`text-lg font-poppins ${navigationMenuTriggerStyle()}`}>
+                                    <span className='text-lg font-poppins'>Minha Conta</span>
                                         </NavigationMenuLink>
                                     </Link>
                                 </NavigationMenuItem>
                                 <NavigationMenuItem>
                                     <Link href="/docs">
                                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                            <FaBasketShopping />
+                                            <FaBasketShopping className='size-6' />
                                         </NavigationMenuLink>
                                     </Link>
                                 </NavigationMenuItem>

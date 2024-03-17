@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@/components/ui/button";
+import '../global.css';
 
 interface Product {
     id: number;
@@ -76,15 +77,15 @@ function Home(): JSX.Element {
                 </Carousel>
             </div>
             <div className="p-5 mb-10 mt-10 rounded-md w-full h-6/12">
-                <div className="justify-center flex text-3xl">
+                <div className="justify-center flex text-3xl font-poppins">
                     <h1>Participe de leilões de itens e experiências insubstituíveis</h1>
 
                 </div>
                 <div>
-                    <p className="flex justify-center text-2xl mt-10">Na Memoriabilia você pode realizar o sonho de ter artigos exclusivos
+                    <p className="flex justify-center text-2xl mt-10 font-poppins">Na Memoriabilia você pode realizar o sonho de ter artigos exclusivos
                         e ainda contribuir com instituições sociais.</p>
                 </div>
-                <div className="flex justify-center container text-3xl mt-10">
+                <div className="flex justify-center container text-3xl mt-10 font-poppins">
                     <span>Confira alguns dos nossos principais parceiros</span>
                 </div>
             </div>
@@ -105,7 +106,7 @@ function Home(): JSX.Element {
                 </Carousel>
             </div>
             <div className="flex justify-center mt-20">
-                <span className="text-4xl font-sans">Coleção Top</span>
+                <span className="text-4xl font-poppins">Coleção Top</span>
             </div>
             <div className="flex justify-center p2 w-full mt-10">
 
@@ -119,36 +120,36 @@ function Home(): JSX.Element {
 
                                     <div className="flex justify-center bg-emerald">
                                         <CardFooter>
-                                            <div className="bg-emerald-300 flex p-2 justify-center">
+                                            <div className="bg-emerald-100 flex p-2 justify-center">
                                                 <div className="p-2">
-                                                    <span className="text-xl font-sans text-emerald-900">
+                                                    <span className="flex justify-center text-xl font-poppins text-emerald-900">
                                                         {product.auction_duration.days}
                                                     </span>
-                                                    <p className="mt-2 text-sm/[5px]">Dias</p>
+                                                    <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Dias</p>
                                                 </div>
                                                 <div className="p-2">
-                                                    <span className="text-xl font-sans text-emerald-900">
+                                                    <span className="flex justify-center text-xl font-poppins text-emerald-900">
                                                         {product.auction_duration.hours}
                                                     </span>
-                                                    <p className="mt-2 text-sm/[5px]">Horas</p>
+                                                    <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Horas</p>
                                                 </div>
                                                 <div className="p-2">
-                                                    <span className="text-xl font-sans text-emerald-900">
+                                                    <span className="flex justify-center text-xl font-poppins text-emerald-900">
                                                         {product.auction_duration.minutes}
                                                     </span>
-                                                    <p className="mt-2 text-sm/[5px]">Minutos</p>
+                                                    <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Minutos</p>
                                                 </div>
                                                 <div className="p-2">
-                                                    <span className="text-xl font-sans text-emerald-900">
+                                                    <span className="flex justify-center text-xl font-poppins text-emerald-900">
                                                         {product.auction_duration.seconds}
                                                     </span>
-                                                    <p className="mt-2 text-sm/[5px]">segundos</p>
+                                                    <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">segundos</p>
                                                 </div>
                                             </div>
                                         </CardFooter>
                                     </div>
                                     <div className="flex justify-center">
-                                        <span className="text-2xl font-sans">Lance inicial: R${product.initialValue}</span>
+                                        <span className="text-2xl font-poppins">Lance inicial: R$ {product.initialValue}</span>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -158,7 +159,7 @@ function Home(): JSX.Element {
 
             </div>
             <div className="flex justify-center mt-32 mb-20">
-                <Button className="h-12"><span className="font-sans text-2xl">Ver Todos</span></Button>
+                <Button className="h-12"><span className="font-poppins text-2xl">Ver Todos</span></Button>
             </div>
         </>
     )
