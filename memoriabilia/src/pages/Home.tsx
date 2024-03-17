@@ -16,7 +16,12 @@ interface Product {
     initialValue: number;
     image: string;
     description: string;
-    time: string;
+    auction_duration: {
+        days: number;
+        hours: number;
+        minutes: number;
+        seconds: number;
+    };
 }
 
 function Home(): JSX.Element {
@@ -70,45 +75,90 @@ function Home(): JSX.Element {
                     </CarouselContent>
                 </Carousel>
             </div>
-            <div className="p-5 mb-10 mt-10 border rounded-md w-full h-6/12">
-                <div className="justify-center flex">
+            <div className="p-5 mb-10 mt-10 rounded-md w-full h-6/12">
+                <div className="justify-center flex text-3xl">
                     <h1>Participe de leilões de itens e experiências insubstituíveis</h1>
-                    <p className="justify-center flex">Na Play For a Cause você pode realizar o sonho de ter artigos exclusivos
+
+                </div>
+                <div>
+                    <p className="flex justify-center text-2xl mt-10">Na Memoriabilia você pode realizar o sonho de ter artigos exclusivos
                         e ainda contribuir com instituições sociais.</p>
                 </div>
-                <div className="container">
-                    <h1>Confira alguns dos nossos principais parceiros</h1>
-                    <Carousel>
-                        <CarouselContent>
-                            <CarouselItem>
-                                <img src="" alt="logo parceiros"></img>
-                            </CarouselItem>
-                        </CarouselContent>
-                    </Carousel>
+                <div className="flex justify-center container text-3xl mt-10">
+                    <span>Confira alguns dos nossos principais parceiros</span>
                 </div>
             </div>
-
-            <div className="grid grid-cols-4 gap-4 w-1/6">
-                <Carousel className="col-span-4 flex items-center justify-center">
-                    <CarouselContent className="-ml-2 md:-ml-4">
-                        <CarouselItem className="flex">
-                                    {products.map((product) => (
-                                        <CarouselItem key={product.id}>
-                                            <Card>
-                                                <CardContent>
-                                                    <img className="mt-5" alt="produto" src={product.image} />
-                                                    <CardTitle className="mt-10 mb-2">{product.description}</CardTitle>
-                                                    <CardDescription>Lance inicial: R${product.initialValue}</CardDescription>
-                                                    <div className="flex justify-center bg-emerald">
-                                                        <CardFooter>{product.time}</CardFooter>
-                                                    </div>
-                                                </CardContent>
-                                            </Card>
-                                        </CarouselItem>
-                                    ))}
-                        </CarouselItem>
+            <div className="mt-20">
+                <Carousel
+                    plugins={[
+                        Autoplay({
+                            delay: 1000,
+                        }),
+                    ]}
+                >
+                    <CarouselContent className="flex justify-center items-center">
+                        <CarouselItem className="basis-1/6"><img className="w-3/12" src="https://logopng.com.br/logos/nike-99.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="basis-1/6"><img className="w-4/12" src="https://logodownload.org/wp-content/uploads/2017/08/centauro-logo-00.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="basis-1/6"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/commons/2/26/SporTV_2021.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/6"><img className="w-2/12" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Escudo_Vasco_2015.png" alt="logo parceiros"></img></CarouselItem>
                     </CarouselContent>
                 </Carousel>
+            </div>
+            <div className="flex justify-center mt-20">
+                <span className="text-4xl font-sans">Coleção Top</span>
+            </div>
+            <div className="flex justify-center p2 w-full mt-10">
+
+                <div className="flex justify-center content-center w-1/6">
+                    {products.map((product) => (
+                        <div key={product.id}>
+                            <Card className="border-hidden m-2 h-full">
+                                <CardContent>
+                                    <img className="mt-5" alt="produto" src={product.image} />
+                                    <CardTitle className="flex justify-center mt-10 mb-5 text-md">{product.description}</CardTitle>
+
+                                    <div className="flex justify-center bg-emerald">
+                                        <CardFooter>
+                                            <div className="bg-emerald-300 flex p-2 justify-center">
+                                                <div className="p-2">
+                                                    <span className="text-xl font-sans text-emerald-900">
+                                                        {product.auction_duration.days}
+                                                    </span>
+                                                    <p className="mt-2 text-sm/[5px]">Dias</p>
+                                                </div>
+                                                <div className="p-2">
+                                                    <span className="text-xl font-sans text-emerald-900">
+                                                        {product.auction_duration.hours}
+                                                    </span>
+                                                    <p className="mt-2 text-sm/[5px]">Horas</p>
+                                                </div>
+                                                <div className="p-2">
+                                                    <span className="text-xl font-sans text-emerald-900">
+                                                        {product.auction_duration.minutes}
+                                                    </span>
+                                                    <p className="mt-2 text-sm/[5px]">Minutos</p>
+                                                </div>
+                                                <div className="p-2">
+                                                    <span className="text-xl font-sans text-emerald-900">
+                                                        {product.auction_duration.seconds}
+                                                    </span>
+                                                    <p className="mt-2 text-sm/[5px]">segundos</p>
+                                                </div>
+                                            </div>
+                                        </CardFooter>
+                                    </div>
+                                    <div className="flex justify-center">
+                                        <span className="text-2xl font-sans">Lance inicial: R${product.initialValue}</span>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    ))}
+                </div>
+
+            </div>
+            <div className="flex justify-center mt-32 mb-20">
+                <Button className="h-12"><span className="font-sans text-2xl">Ver Todos</span></Button>
             </div>
         </>
     )

@@ -57,62 +57,62 @@ export default function Navbar() {
 
                         <NavigationMenuList>
                             <NavigationMenuItem>
-                                <NavigationMenuTrigger>Esportes</NavigationMenuTrigger>
+                                <NavigationMenuTrigger className='text-lg'>Esportes</NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
                                         Atletas
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
                                         Miniatura Realista
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
                                         Quadros
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
                                         Jogo das Estrelas
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
                                         Casa da Moeda do Brasil
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
                                         MDE Social
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
                                         Parceiros
                                     </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/docs">
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
                                         Artigos
                                     </NavigationMenuLink>
                                 </Link>
@@ -122,7 +122,7 @@ export default function Navbar() {
                             <NavigationMenuList>
                                 <NavigationMenuItem>
                                     <Link href="/docs">
-                                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    <NavigationMenuLink className={`text-lg ${navigationMenuTriggerStyle()}`}>
                                             Minha Conta
                                         </NavigationMenuLink>
                                     </Link>
