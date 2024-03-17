@@ -5,7 +5,7 @@
 }
 
 .search-input {
-  width: calc(100% - 40px); /* Considerando o tamanho do ícone de pesquisa */
+  width: calc(100% - 1px); /* Considerando o tamanho do ícone de pesquisa */
   padding-right: 40px; /* Adicione espaço para o ícone */
   height: 50px;
 }

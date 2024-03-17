@@ -110,10 +110,10 @@ function Home(): JSX.Element {
             </div>
             <div className="flex justify-center p2 w-full mt-10">
 
-                <div className="flex justify-center content-center w-1/6">
+                <div className="flex justify-center content-center w-2/6">
                     {products.map((product) => (
                         <div key={product.id}>
-                            <Card className="border-hidden m-2 h-full">
+                            <Card className="border-hidden rounded-none m-2 h-full hover:border-solid hover:shadow-lg">
                                 <CardContent>
                                     <img className="mt-5" alt="produto" src={product.image} />
                                     <CardTitle className="flex justify-center mt-10 mb-5 text-md">{product.description}</CardTitle>
