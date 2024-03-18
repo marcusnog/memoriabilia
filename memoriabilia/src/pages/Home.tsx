@@ -27,6 +27,7 @@ interface Product {
 
 function Home(): JSX.Element {
     const [products, setProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -37,6 +38,7 @@ function Home(): JSX.Element {
                 }
                 const data = await response.json();
                 setProducts(data.products);
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -111,50 +113,55 @@ function Home(): JSX.Element {
             <div className="flex justify-center p2 w-full mt-10">
 
                 <div className="flex justify-center content-center w-2/6">
-                    {products.map((product) => (
-                        <div key={product.id}>
-                            <Card className="border-hidden rounded-none m-2 h-full hover:border-solid hover:shadow-lg">
-                                <CardContent>
-                                    <img className="mt-5" alt="produto" src={product.image} />
-                                    <CardTitle className="flex justify-center mt-10 mb-5 text-md">{product.description}</CardTitle>
+                    {loading ? (
+                        <div className="text-center">Loading...</div>
+                    ) : (
 
-                                    <div className="flex justify-center bg-emerald">
-                                        <CardFooter>
-                                            <div className="bg-emerald-100 flex p-2 justify-center">
-                                                <div className="p-2">
-                                                    <span className="flex justify-center text-xl font-poppins text-emerald-900">
-                                                        {product.auction_duration.days}
-                                                    </span>
-                                                    <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Dias</p>
+                        products.map((product) => (
+                            <div key={product.id}>
+                                <Card className="border-hidden rounded-none m-2 h-full hover:border-solid hover:shadow-lg">
+                                    <CardContent>
+                                        <img className="mt-5" alt="produto" src={product.image} />
+                                        <CardTitle className="flex justify-center mt-10 mb-5 text-md">{product.description}</CardTitle>
+
+                                        <div className="flex justify-center bg-emerald">
+                                            <CardFooter>
+                                                <div className="bg-emerald-100 flex p-2 justify-center">
+                                                    <div className="p-2">
+                                                        <span className="flex justify-center text-xl font-poppins text-emerald-900">
+                                                            {product.auction_duration.days}
+                                                        </span>
+                                                        <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Dias</p>
+                                                    </div>
+                                                    <div className="p-2">
+                                                        <span className="flex justify-center text-xl font-poppins text-emerald-900">
+                                                            {product.auction_duration.hours}
+                                                        </span>
+                                                        <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Horas</p>
+                                                    </div>
+                                                    <div className="p-2">
+                                                        <span className="flex justify-center text-xl font-poppins text-emerald-900">
+                                                            {product.auction_duration.minutes}
+                                                        </span>
+                                                        <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Minutos</p>
+                                                    </div>
+                                                    <div className="p-2">
+                                                        <span className="flex justify-center text-xl font-poppins text-emerald-900">
+                                                            {product.auction_duration.seconds}
+                                                        </span>
+                                                        <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">segundos</p>
+                                                    </div>
                                                 </div>
-                                                <div className="p-2">
-                                                    <span className="flex justify-center text-xl font-poppins text-emerald-900">
-                                                        {product.auction_duration.hours}
-                                                    </span>
-                                                    <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Horas</p>
-                                                </div>
-                                                <div className="p-2">
-                                                    <span className="flex justify-center text-xl font-poppins text-emerald-900">
-                                                        {product.auction_duration.minutes}
-                                                    </span>
-                                                    <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Minutos</p>
-                                                </div>
-                                                <div className="p-2">
-                                                    <span className="flex justify-center text-xl font-poppins text-emerald-900">
-                                                        {product.auction_duration.seconds}
-                                                    </span>
-                                                    <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">segundos</p>
-                                                </div>
-                                            </div>
-                                        </CardFooter>
-                                    </div>
-                                    <div className="flex justify-center">
-                                        <span className="text-2xl font-poppins">Lance inicial: R$ {product.initialValue}</span>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </div>
-                    ))}
+                                            </CardFooter>
+                                        </div>
+                                        <div className="flex justify-center">
+                                            <span className="text-2xl font-poppins">Lance inicial: R$ {product.initialValue}</span>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        ))
+                    )}
                 </div>
 
             </div>

@@ -6,14 +6,14 @@ import { FaFacebook } from "react-icons/fa6";
 function Footer() {
     return (
         <>
-            <div className=" bg-black w-full h-96 transition-all duration-200">
+            <div className=" bottom-0 bg-black w-full h-96 transition-all duration-200">
                 <div className="flex justify-center w-3/6 m-20">
                     <div>
                         <img className="flex size-40 mt-12" src="https://memorabiliadoesporte.com.br/wp-content/uploads/2020/12/logo-branca.png">
                         </img>
-                        <div className="flex justify-center mt-6">
-                            <a><FaInstagram className="bg-white size-8" /></a>
-                            <a><FaFacebook className="bg-white size-8" /></a>
+                        <div className="flex justify-center mt-6 border rounded-lg bg-white">
+                            <a href="https://www.instagram.com/memorabiliadoesporte/"><FaInstagram className="size-8 hover:animate-pulse" /></a>
+                            <a href="https://www.facebook.com/memorabiliadoesporte"><FaFacebook className="size-8 hover:animate-pulse" /></a>
                         </div>
                     </div>
                     <div className="mt-12 m-10">
