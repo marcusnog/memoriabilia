@@ -11,6 +11,8 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@/components/ui/button";
 import '../global.css';
+import { Link } from "@radix-ui/react-navigation-menu";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
 
 interface Product {
     id: number;
@@ -79,36 +81,54 @@ function Home(): JSX.Element {
                 </Carousel>
             </div>
             <div className="p-5 mb-10 mt-10 rounded-md w-full h-6/12">
-                <div className="justify-center flex text-3xl font-poppins">
+                <div className="justify-center flex text-3xl font-poppins font-bold">
                     <h1>Participe de leilões de itens e experiências insubstituíveis</h1>
 
                 </div>
                 <div>
-                    <p className="flex justify-center text-2xl mt-10 font-poppins">Na Memoriabilia você pode realizar o sonho de ter artigos exclusivos
+                    <p className="flex justify-center text-2xl mt-10 font-poppins">Na Memorabília você pode realizar o sonho de ter artigos exclusivos
                         e ainda contribuir com instituições sociais.</p>
                 </div>
-                <div className="flex justify-center container text-3xl mt-10 font-poppins">
+                <div className="flex justify-center container text-3xl mt-10 font-poppins font-semiboldbold">
                     <span>Confira alguns dos nossos principais parceiros</span>
                 </div>
             </div>
-            <div className="mt-20">
+            <div className="flex mt-20 w-full">
                 <Carousel
                     plugins={[
                         Autoplay({
-                            delay: 1000,
+                            delay: 3000,
+                            playOnInit: true,
                         }),
                     ]}
                 >
-                    <CarouselContent className="flex justify-center items-center">
-                        <CarouselItem className="basis-1/6"><img className="w-3/12" src="https://logopng.com.br/logos/nike-99.png" alt="logo parceiros"></img></CarouselItem>
-                        <CarouselItem className="basis-1/6"><img className="w-4/12" src="https://logodownload.org/wp-content/uploads/2017/08/centauro-logo-00.png" alt="logo parceiros"></img></CarouselItem>
-                        <CarouselItem className="basis-1/6"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/commons/2/26/SporTV_2021.png" alt="logo parceiros"></img></CarouselItem>
-                        <CarouselItem className="lg:basis-1/6"><img className="w-2/12" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Escudo_Vasco_2015.png" alt="logo parceiros"></img></CarouselItem>
+                    <CarouselContent className="flex justify-center items-center w-full">
+                        <CarouselItem className="lg:basis-1/5"><img className="w-3/12" src="https://logopng.com.br/logos/nike-99.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://logodownload.org/wp-content/uploads/2017/08/centauro-logo-00.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/commons/2/26/SporTV_2021.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-2/12" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Escudo_Vasco_2015.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/commons/3/35/Stock_Car_BR.png" alt="logo"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://seeklogo.com/images/P/penalty-logo-69E8998938-seeklogo.com.png" alt="logo"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/pt/b/bc/NBB_logo_2.png" alt="logo"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-3/12" src="https://logopng.com.br/logos/nike-99.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://logodownload.org/wp-content/uploads/2017/08/centauro-logo-00.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/commons/2/26/SporTV_2021.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-2/12" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Escudo_Vasco_2015.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/commons/3/35/Stock_Car_BR.png" alt="logo"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://seeklogo.com/images/P/penalty-logo-69E8998938-seeklogo.com.png" alt="logo"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/pt/b/bc/NBB_logo_2.png" alt="logo"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-3/12" src="https://logopng.com.br/logos/nike-99.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://logodownload.org/wp-content/uploads/2017/08/centauro-logo-00.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/commons/2/26/SporTV_2021.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-2/12" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Escudo_Vasco_2015.png" alt="logo parceiros"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/commons/3/35/Stock_Car_BR.png" alt="logo"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://seeklogo.com/images/P/penalty-logo-69E8998938-seeklogo.com.png" alt="logo"></img></CarouselItem>
+                        <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/pt/b/bc/NBB_logo_2.png" alt="logo"></img></CarouselItem>
                     </CarouselContent>
                 </Carousel>
             </div>
             <div className="flex justify-center mt-20">
-                <span className="text-4xl font-poppins">Coleção Top</span>
+                <span className="text-4xl font-poppins font-semibold">Coleção Top</span>
             </div>
             <div className="flex justify-center p2 w-full mt-10">
 
@@ -119,55 +139,55 @@ function Home(): JSX.Element {
 
                         products.map((product) => (
                             <div key={product.id}>
-                                <Card className="border-hidden rounded-none m-2 h-full hover:border-solid hover:shadow-lg">
-                                    <CardContent>
-                                        <img className="mt-5" alt="produto" src={product.image} />
-                                        <CardTitle className="flex justify-center mt-10 mb-5 text-md">{product.description}</CardTitle>
-
-                                        <div className="flex justify-center bg-emerald">
-                                            <CardFooter>
-                                                <div className="bg-emerald-100 flex p-2 justify-center">
-                                                    <div className="p-2">
-                                                        <span className="flex justify-center text-xl font-poppins text-emerald-900">
-                                                            {product.auction_duration.days}
-                                                        </span>
-                                                        <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Dias</p>
-                                                    </div>
-                                                    <div className="p-2">
-                                                        <span className="flex justify-center text-xl font-poppins text-emerald-900">
-                                                            {product.auction_duration.hours}
-                                                        </span>
-                                                        <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Horas</p>
-                                                    </div>
-                                                    <div className="p-2">
-                                                        <span className="flex justify-center text-xl font-poppins text-emerald-900">
-                                                            {product.auction_duration.minutes}
-                                                        </span>
-                                                        <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">Minutos</p>
-                                                    </div>
-                                                    <div className="p-2">
-                                                        <span className="flex justify-center text-xl font-poppins text-emerald-900">
-                                                            {product.auction_duration.seconds}
-                                                        </span>
-                                                        <p className="mt-2 text-sm/[5px] text-emerald-900 font-poppins">segundos</p>
-                                                    </div>
-                                                </div>
-                                            </CardFooter>
-                                        </div>
-                                        <div className="flex justify-center">
-                                            <span className="text-2xl font-poppins">Lance inicial: R$ {product.initialValue}</span>
-                                        </div>
-                                    </CardContent>
-                                </Card>
+                                <NavigationMenu>
+                                    <NavigationMenuList>
+                                        <NavigationMenuItem>
+                                            <Link href="/product/1">
+                                                <NavigationMenuLink>
+                                                    <Card className="border-hidden rounded-none m-2 h-full w-72 hover:shadow-2xl">
+                                                        <CardContent>
+                                                            <img className="mt-5" alt="produto" src={product.image} />
+                                                            <CardTitle className="flex justify-center mt-10 mb-2 text-xs font-light">{product.description}</CardTitle>
+                                                            <div className="flex">
+                                                                <span className="text-sm font-poppins"><span className="font-semibold text-sm">Lance Atual:</span> R$ {product.initialValue}</span>
+                                                            </div>
+                                                            <CardDescription>
+                                                                <div className="mt-2">
+                                                                    <span className="flex text-xs font-poppins text-blue-500 font-semibold">
+                                                                        <span className="flex ml-1">
+                                                                            {product.auction_duration.days}
+                                                                            <p className="ml-1">Dia</p>
+                                                                        </span>
+                                                                        <span className="flex ml-1">
+                                                                            {product.auction_duration.hours}
+                                                                            <p className="ml-1">Horas</p>
+                                                                        </span>
+                                                                        <span className="flex ml-1">
+                                                                            {product.auction_duration.minutes}
+                                                                            <p className="ml-1">min</p>
+                                                                        </span>
+                                                                        <p className="flex ml-1">Restante</p>
+                                                                    </span>
+                                                                </div>
+                                                            </CardDescription>
+                                                        </CardContent>
+                                                    </Card>
+                                                </NavigationMenuLink>
+                                            </Link>
+                                        </NavigationMenuItem>
+                                    </NavigationMenuList>
+                                </NavigationMenu>
                             </div>
                         ))
                     )}
                 </div>
 
             </div>
-            <div className="flex justify-center mt-32 mb-20">
-                <Button className="h-12"><span className="font-poppins text-2xl">Ver Todos</span></Button>
-            </div>
+            {products.length > 3 && (
+                <div className="flex justify-center mt-32 mb-20">
+                    <Button className="h-12"><span className="font-poppins text-2xl">Ver Todos</span></Button>
+                </div>
+            )}
         </>
     )
 }
