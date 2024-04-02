@@ -6,7 +6,7 @@ import Account from './pages/account';
 import Login from './pages/login';
 import ProductDetail from './pages/productDetail';
 import CreateAccount from './pages/createAccount';
-
+import NotFound from './pages/notFound';
 
 const AppRoutes = () => {
   return (
@@ -16,8 +16,9 @@ const AppRoutes = () => {
         <Route path="/" Component={Home} />
         <Route path="/account" Component={Account} />
         <Route path="/login" Component={Login} />
-        <Route path="/product/1" Component={ProductDetail} />4
+        <Route path='/product/:id' Component={ProductDetail} />4
         <Route path="/createAccount" Component={CreateAccount} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );

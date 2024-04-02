@@ -48,6 +48,23 @@ export default function Navbar() {
         setIsLoggedIn(!!token);
     };
 
+    const handleLogout = () => {
+        // Fazer a chamada para a API de logout
+        fetch('http://127.0.0.1:8000/api/logout', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    localStorage.removeItem('token');
+                    setIsLoggedIn(false);
+                }
+            })
+            .catch(error => console.error('Error logging out:', error));
+    };
 
     return (
         <>
@@ -143,22 +160,26 @@ export default function Navbar() {
                             <NavigationMenu className='ml-36'>
                                 <NavigationMenuList>
                                     <NavigationMenuItem>
-                                        <Link href="./account">
-                                            <NavigationMenuLink className={` font-poppins ${navigationMenuTriggerStyle()}`}>
-                                                <span className=' font-poppins font-bold'>Minha Conta</span>
-                                            </NavigationMenuLink>
-                                        </Link>
-                                    </NavigationMenuItem>
-                                    <NavigationMenuItem>
-                                        <Link href="/docs">
-                                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                                <FaBasketShopping className='size-6' />
-                                            </NavigationMenuLink>
-                                        </Link>
+                                        <NavigationMenuTrigger className='w-full'>
+                                            <Link href="/account">
+                                                <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
+                                                    <span className='font-poppins font-bold'>Minha Conta</span>
+                                                </NavigationMenuLink>
+                                            </Link>
+                                            <NavigationMenuContent>
+                                                <NavigationMenuLink asChild>
+                                                    <ul className='flex justify-center md:w-[150px] lg:w-[160px]'>
+                                                        <li>
+                                                            <a onClick={handleLogout} className='font-poppins font-bold cursor-pointer'>Sair</a>
+                                                        </li>
+                                                    </ul>
+                                                </NavigationMenuLink>
+                                            </NavigationMenuContent>
+                                        </NavigationMenuTrigger>
                                     </NavigationMenuItem>
                                 </NavigationMenuList>
                             </NavigationMenu>
-                        ) : ( // Se o usuário não estiver autenticado
+                        ) : (
                             <NavigationMenu className='ml-36 flex'>
                                 <NavigationMenuList>
                                     <NavigationMenuItem>

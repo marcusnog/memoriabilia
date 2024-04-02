@@ -1,40 +1,64 @@
-import { Input } from "@/components/ui/input";
+import { useParams } from "react-router-dom";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
 interface Product {
     id: number;
-    initialValue: number;
-    image: string;
+    title: string;
     description: string;
-    auction_duration: {
-        days: number;
-        hours: number;
-        minutes: number;
-        seconds: number;
-    };
+    status: string;
+    currency: string;
+    price: string;
+    additional_info: string | null;
+    images: Image[];
+    auction: Auction;
+}
+
+interface Image {
+    id: number;
+    url: string;
+    alt: string;
+    format: string;
+    product_id: number;
+    created_at: string;
+    updated_at: string;
+}
+
+interface Auction {
+    id: number;
+    title: string;
+    description: string;
+    initial_value: string;
+    start_at: string;
+    end_at: string;
+    created_at: string;
+    updated_at: string;
+    products: Product[];
 }
 
 const ProductDetail: React.FC = () => {
+    const { id } = useParams<{ id: string }>(); // Extrai o id da URL usando o hook useParams
     const [product, setProduct] = useState<Product | null>(null);
+    const [auction, setAuction] = useState<Auction | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await fetch('https://8rgvy.wiremockapi.cloud/product/1');
+                const response = await fetch(`http://127.0.0.1:8000/api/auctions/${id}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch product');
                 }
                 const data = await response.json();
-                setProduct(data.product);
+                setAuction(data.data);
+                setProduct(data.data.products[0]);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching product:', error);
             }
         };
         fetchProduct();
-    }, []);
+    }, [id]);
 
     return (
         <div className="flex justify-center content-center w-full mt-72">
@@ -43,41 +67,34 @@ const ProductDetail: React.FC = () => {
                     <div className="text-center">Loading...</div>
                 ) : (
                     <div>
-                        {product && (
+                        {auction && (
                             <>
                                 <div className="flex justify-center">
                                     <div className="w-6/12 border rounded-md flex justify-center shadow-md">
-                                        <img className="mt-5 w-6/12" alt="produto" src={product.image} />
+                                        <img className="mt-5 w-6/12" alt="produto" src={auction.products[0]?.images[0]?.url} />
                                     </div>
                                     <div className="border shadow-xl p-8 ml-10 rounded-md">
-                                        <p className="mt-10 text-md font-bold text-black">Restante: </p>
-                                        <p className="text-xl font-poppins text-blue-500 font-semibold mt-2">
-                                            {product.auction_duration.days} Dia(s), {product.auction_duration.hours} Hora(s), {product.auction_duration.minutes} Minuto(s)
-                                        </p>
-                                        <h2 className="font-bold text-2xl mt-10">{product.description}</h2>
+                                        <h2 className="font-bold text-2xl mt-10">{auction.products[0]?.title}</h2>
 
                                         <div className="flex justify-center mt-10 border shadow-sm w-full rounded-md">
-                                            <p className="text-2xl">Lance Atual: R$ {product.initialValue}</p>
+                                            <p className="text-2xl">Lance Atual: R$ {auction.initial_value}</p>
                                         </div>
-                                        <div>
+                                        <div className="mt-5">
+                                            <div className="mt-10">
+                                                <p className="text-md font-semibold text-blue-500">{auction.start_at} Restante</p>
+                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
-                                <div className="mt-10 border shadow-xl w-full h-72">
-                                    <div className="w-full flex justify-center">
-                                        <div className="flex justify-center p-5 w-full border bg-black">
-                                            <span className="text-2xl font-bold text-white">
-                                                Descrição
-                                            </span>
-
-                                        </div>
-
+                                <div className="mt-10 border shadow-xl w-full h-72 rounded-md shadow-lg">
+                                    <div className="bg-black flex justify-center rounded-md">
+                                        <span className="text-bold text-white">Descrição</span>
                                     </div>
-                                    <div className="flex justify-center">
-                                        <p className="mt-10">
-                                            {product.description}
-                                        </p>
+                                    <div className="flex justify-start w-full p-5">
+                                        <div className="w-6/12 flex justify-start">
+                                            <span className="mt-20">{auction.description}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </>

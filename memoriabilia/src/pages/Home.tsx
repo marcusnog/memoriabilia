@@ -14,39 +14,92 @@ import '../global.css';
 import { Link } from "@radix-ui/react-navigation-menu";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
 
+interface Auction {
+    id: number;
+    title: string;
+    description: string;
+    initial_value: string;
+    start_at: string;
+    end_at: string;
+    created_at: string;
+    updated_at: string;
+    products: Product[];
+}
+
 interface Product {
     id: number;
-    initialValue: number;
-    image: string;
+    title: string;
     description: string;
-    auction_duration: {
-        days: number;
-        hours: number;
-        minutes: number;
-        seconds: number;
-    };
+    status: string;
+    currency: string;
+    price: string;
+    additional_info: string | null;
+    images: Image[];
+    auction: Auction;
+}
+
+interface Image {
+    id: number;
+    url: string;
+    alt: string;
+    format: string;
+    product_id: number;
+    created_at: string;
+    updated_at: string;
 }
 
 function Home(): JSX.Element {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [auctions, setAuctions] = useState<Auction[]>([]);
     const [loading, setLoading] = useState(true);
 
+
+
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchAuctions = async () => {
             try {
-                const response = await fetch('https://8rgvy.wiremockapi.cloud/json/1');
+                const response = await fetch('http://127.0.0.1:8000/api/auctions');
                 if (!response.ok) {
-                    throw new Error('Failed to fetch products');
+                    throw new Error('Failed to fetch auctions');
                 }
-                const data = await response.json();
-                setProducts(data.products);
+                const responseData = await response.json();
+                setAuctions(responseData.data);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching products:', error);
+                console.error('Error fetching auctions:', error);
             }
         };
-        fetchProducts();
+        fetchAuctions();
     }, []);
+
+    // Função para calcular a diferença de tempo entre start_at e end_at
+    const calculateTimeDifference = (startAt: string, endAt: string): number => {
+        const startTime = new Date(startAt).getTime();
+        const endTime = new Date(endAt).getTime();
+        return Math.max(0, endTime - startTime);
+    };
+
+    // Estado para armazenar a diferença de tempo restante para cada leilão
+    const [remainingTimes, setRemainingTimes] = useState<number[]>([]);
+
+    useEffect(() => {
+        // Atualiza a diferença de tempo restante a cada segundo
+        const intervalId = setInterval(() => {
+            setRemainingTimes(auctions.map((auction) => calculateTimeDifference(auction.start_at, auction.end_at)));
+        }, 1000);
+
+        // Limpa o intervalo quando o componente é desmontado
+        return () => clearInterval(intervalId);
+    }, [auctions]);
+
+    // Função para formatar a diferença de tempo em um contador regressivo
+    const formatCountdown = (difference: number): string => {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    };
+
 
     return (
         <>
@@ -127,67 +180,58 @@ function Home(): JSX.Element {
                     </CarouselContent>
                 </Carousel>
             </div>
-            <div className="flex justify-center mt-20">
-                <span className="text-4xl font-poppins font-semibold">Coleção Top</span>
-            </div>
-            <div className="flex justify-center p2 w-full mt-10">
 
-                <div className="flex justify-center content-center w-2/6">
-                    {loading ? (
-                        <div className="text-center">Loading...</div>
-                    ) : (
+            <div className="flex justify-center p2 w-full mt-20">
 
-                        products.map((product) => (
-                            <div key={product.id}>
+                <div className="content-center w-2/6">
+                    {!loading && Array.isArray(auctions) && auctions.length > 0 ? (
+                        auctions.map((auction, index) => (
+                            <div key={auction.id} className="m-2">
+                                <a href={`/product/${auction.products[0]?.id}`}>
+                                <div className="flex justify-center mt-20">
+                                    <span className="text-4xl font-poppins font-semibold">{auction.title}</span>
+                                </div>
                                 <NavigationMenu>
                                     <NavigationMenuList>
                                         <NavigationMenuItem>
-                                            <Link href="/product/1">
-                                                <NavigationMenuLink>
-                                                    <Card className="border-hidden rounded-none m-2 h-full w-72 hover:shadow-2xl">
-                                                        <CardContent>
-                                                            <img className="mt-5" alt="produto" src={product.image} />
-                                                            <CardTitle className="flex justify-center mt-10 mb-2 text-xs font-light">{product.description}</CardTitle>
-                                                            <div className="flex">
-                                                                <span className="text-sm font-poppins"><span className="font-semibold text-sm">Lance Atual:</span> R$ {product.initialValue}</span>
-                                                            </div>
-                                                            <CardDescription>
-                                                                <div className="mt-2">
-                                                                    <span className="flex text-xs font-poppins text-blue-500 font-semibold">
-                                                                        <span className="flex ml-1">
-                                                                            {product.auction_duration.days}
-                                                                            <p className="ml-1">Dia</p>
-                                                                        </span>
-                                                                        <span className="flex ml-1">
-                                                                            {product.auction_duration.hours}
-                                                                            <p className="ml-1">Horas</p>
-                                                                        </span>
-                                                                        <span className="flex ml-1">
-                                                                            {product.auction_duration.minutes}
-                                                                            <p className="ml-1">min</p>
-                                                                        </span>
-                                                                        <p className="flex ml-1">Restante</p>
-                                                                    </span>
+                                            <Card className="border-hidden rounded-none m-2 h-full w-72 hover:shadow-2xl mt-20">
+                                                <CardContent>
+                                                    <img className="mt-5" alt="auction" src={auction.products[0]?.images[0]?.url || 'url_da_imagem_padrao'} />
+                                                    <CardTitle className="flex justify-center mt-10 mb-2 text-xs font-light">{auction.products[0].title}</CardTitle>
+                                                    <div className="flex">
+                                                        <span className="text-sm font-poppins"><span className="font-semibold text-sm">Lance Atual:</span> R$ {auction.initial_value}</span>
+                                                    </div>
+                                                    <CardDescription>
+                                                        <div className="mt-2">
+                                                            <span className="flex text-xs font-poppins text-blue-500 font-semibold">
+                                                                <div className="flex justify-center mt-2">
+                                                                {formatCountdown(remainingTimes[index])}<p className="flex ml-1">Restante</p>
                                                                 </div>
-                                                            </CardDescription>
-                                                        </CardContent>
-                                                    </Card>
-                                                </NavigationMenuLink>
-                                            </Link>
+                                                            </span>
+                                                        </div>
+                                                    </CardDescription>
+                                                </CardContent>
+                                            </Card>
                                         </NavigationMenuItem>
                                     </NavigationMenuList>
                                 </NavigationMenu>
+                                </a>
                             </div>
                         ))
+                    ) : (
+                        <div className="text-center">Não há leilões disponíveis no momento.</div>
                     )}
+
                 </div>
 
             </div>
-            {products.length > 3 && (
-                <div className="flex justify-center mt-32 mb-20">
-                    <Button className="h-12"><span className="font-poppins text-2xl">Ver Todos</span></Button>
-                </div>
-            )}
+            {auctions.map((auction) =>
+                auction.products.length > 4 && (
+                    <div className="flex justify-center mt-32 mb-20">
+                        <Button className="h-12"><span className="font-poppins text-2xl">Ver Todos</span></Button>
+                    </div>
+                ))
+            }
         </>
     )
 }
