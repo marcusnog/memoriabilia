@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     NavigationMenu,
     NavigationMenuContent,
-    NavigationMenuIndicator,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    NavigationMenuViewport,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Link } from '@radix-ui/react-navigation-menu';
 import { Input } from '@/components/ui/input';
 import '../styles.css';
-import { EnterIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { FaBasketShopping } from "react-icons/fa6";
+import { EnterIcon, HamburgerMenuIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
 
 
 export default function Navbar() {
@@ -24,11 +21,11 @@ export default function Navbar() {
 
     useEffect(() => {
         function handleScroll() {
-            setIsScrolled(window.scrollY > 100);
+            setIsScrolled(window.scrollY > 50);
         }
 
         function handleResize() {
-            setIsMobile(window.innerWidth < 600);
+            setIsMobile(window.innerWidth < 844);
         }
 
         window.addEventListener('scroll', handleScroll);
@@ -50,7 +47,7 @@ export default function Navbar() {
 
     const handleLogout = () => {
         // Fazer a chamada para a API de logout
-        fetch('http://127.0.0.1:8000/api/logout', {
+        fetch('http://ec2-3-145-6-44.us-east-2.compute.amazonaws.com/api/logout', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -90,110 +87,155 @@ export default function Navbar() {
                         </div>
                     )}
                 </div>
-
                 <div className={`flex justify-center ${isScrolled ? 'fixed top-0 mt-3' : ''}`}>
-                    <NavigationMenu className={`bg-white w-full z-50 ${isScrolled ? 'justify-center mt-3/6' : ''}`}>
-                        <NavigationMenuList>
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger className='font-poppins font-bold'>Esportes</NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link href="/docs">
-                                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
-                                        <span className='font-poppins font-bold'>Atletas</span>
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link href="/docs">
-                                    <NavigationMenuLink className={`font-poppins font-bold ${navigationMenuTriggerStyle()}`}>
-                                        <span className='font-poppins font-bold'>Miniatura Realista</span>
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link href="/docs">
-                                    <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
-                                        <span className='font-poppins font-bold'>Quadros</span>
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link href="/docs">
-                                    <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
-                                        <span className='font-poppins font-bold'>Jogo das Estrelas</span>
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link href="/docs">
-                                    <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
-                                        <span className=' font-poppins font-bold'>Casa da Moeda do Brasil</span>
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link href="/docs">
-                                    <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
-                                        <span className='font-poppins font-bold'>MDE Social</span>
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link href="/docs">
-                                    <NavigationMenuLink className={` font-poppins ${navigationMenuTriggerStyle()}`}>
-                                        <span className=' font-poppins font-bold'>Parceiros</span>
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <Link href="/docs">
-                                    <NavigationMenuLink className={` font-poppins ${navigationMenuTriggerStyle()}`}>
-                                        <span className=' font-poppins font-bold'>Artigos</span>
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                        </NavigationMenuList>
-                        {isLoggedIn ? (
-                            <NavigationMenu className='ml-36'>
-                                <NavigationMenuList>
-                                    <NavigationMenuItem>
-                                        <NavigationMenuTrigger className='w-full'>
-                                            <Link href="/account">
-                                                <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
-                                                    <span className='font-poppins font-bold'>Minha Conta</span>
+                    <div className='hidden md:flex justify-center'>
+                        <NavigationMenu className={` bg-white w-full z-50 ${isScrolled ? 'justify-center mt-3/6' : ''}`}>
+                            <NavigationMenuList>
+                                <NavigationMenuItem>
+                                    <NavigationMenuTrigger className='font-poppins font-bold'>Esportes</NavigationMenuTrigger>
+                                    <NavigationMenuContent>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link href="/docs">
+                                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
+                                            <span className='font-poppins font-bold'>Atletas</span>
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link href="/docs">
+                                        <NavigationMenuLink className={`font-poppins font-bold ${navigationMenuTriggerStyle()}`}>
+                                            <span className='font-poppins font-bold'>Miniatura Realista</span>
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link href="/docs">
+                                        <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
+                                            <span className='font-poppins font-bold'>Quadros</span>
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link href="/docs">
+                                        <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
+                                            <span className='font-poppins font-bold'>Jogo das Estrelas</span>
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link href="/docs">
+                                        <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
+                                            <span className=' font-poppins font-bold'>Casa da Moeda do Brasil</span>
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link href="/docs">
+                                        <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
+                                            <span className='font-poppins font-bold'>MDE Social</span>
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link href="/docs">
+                                        <NavigationMenuLink className={` font-poppins ${navigationMenuTriggerStyle()}`}>
+                                            <span className=' font-poppins font-bold'>Parceiros</span>
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                                <NavigationMenuItem>
+                                    <Link href="/docs">
+                                        <NavigationMenuLink className={` font-poppins ${navigationMenuTriggerStyle()}`}>
+                                            <span className=' font-poppins font-bold'>Artigos</span>
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                            </NavigationMenuList>
+                            {isLoggedIn ? (
+                                <NavigationMenu className='ml-36'>
+                                    <NavigationMenuList>
+                                        <NavigationMenuItem>
+                                            <NavigationMenuTrigger className='w-full'>
+                                                <Link href="/account">
+                                                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
+                                                        <span className='font-poppins font-bold'>Minha Conta</span>
+                                                    </NavigationMenuLink>
+                                                </Link>
+                                                <NavigationMenuContent>
+                                                    <NavigationMenuLink asChild>
+                                                        <ul className='flex justify-center md:w-[150px] lg:w-[160px]'>
+                                                            <li>
+                                                                <a onClick={handleLogout} className='font-poppins font-bold cursor-pointer'>Sair</a>
+                                                            </li>
+                                                        </ul>
+                                                    </NavigationMenuLink>
+                                                </NavigationMenuContent>
+                                            </NavigationMenuTrigger>
+                                        </NavigationMenuItem>
+                                    </NavigationMenuList>
+                                </NavigationMenu>
+                            ) : (
+                                <NavigationMenu className='ml-36'>
+                                    <NavigationMenuList>
+                                        <NavigationMenuItem>
+                                            <Link href="/login">
+                                                <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
+                                                    <span className='flex font-poppins font-bold'><EnterIcon className='size-5 mr-2' />Login</span>
                                                 </NavigationMenuLink>
                                             </Link>
-                                            <NavigationMenuContent>
+                                        </NavigationMenuItem>
+                                    </NavigationMenuList>
+                                </NavigationMenu>
+                            )}
+
+                        </NavigationMenu>
+                    </div>
+                    <div className='md:hidden flex justify-start w-full'>
+                        <NavigationMenu className=' list-none'>
+                            <NavigationMenuItem>
+                                <NavigationMenuTrigger>
+                                    <HamburgerMenuIcon className='size-8' />
+                                    <NavigationMenuContent className='flex justify-center w-[120px]'>
+                                        {isLoggedIn ? (
+                                            <ul className='list-none flex-column justify-center'>
                                                 <NavigationMenuLink asChild>
-                                                    <ul className='flex justify-center md:w-[150px] lg:w-[160px]'>
+                                                    <ul className='md:w-[100px] lg:w-[160px]'>
+                                                        <li className='items-center'>Minha Conta</li>
                                                         <li>
                                                             <a onClick={handleLogout} className='font-poppins font-bold cursor-pointer'>Sair</a>
                                                         </li>
                                                     </ul>
                                                 </NavigationMenuLink>
-                                            </NavigationMenuContent>
-                                        </NavigationMenuTrigger>
-                                    </NavigationMenuItem>
-                                </NavigationMenuList>
-                            </NavigationMenu>
-                        ) : (
-                            <NavigationMenu className='ml-36 flex'>
-                                <NavigationMenuList>
-                                    <NavigationMenuItem>
-                                        <Link href="/login">
-                                            <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
-                                                <span className='flex font-poppins font-bold'><EnterIcon className='size-5 mr-2' />Login</span>
-                                            </NavigationMenuLink>
-                                        </Link>
-                                    </NavigationMenuItem>
-                                </NavigationMenuList>
-                            </NavigationMenu>
-                        )}
-                    </NavigationMenu>
+                                            </ul>
+                                        ) : (
+                                            <ul>
+                                                <li>
+                                                    <Link href="/login">
+                                                        <NavigationMenuLink className={`font-poppins ${navigationMenuTriggerStyle()}`}>
+                                                            <span className='flex font-poppins font-bold'><EnterIcon className='size-5 mr-2' />Login</span>
+                                                        </NavigationMenuLink>
+                                                    </Link>
+                                                </li>
+                                                <li className='items-center'></li>
+                                                <li className='items-center'></li>
+                                                <li className='items-center'></li>
+                                                <li className='items-center'></li>
+                                                <li className='items-center'></li>
+                                                <li className='items-center'></li>
+                                                <li className='items-center'></li>
+                                                <li className='items-center'></li>
+                                                <li className='items-center'></li>
+                                            </ul>
+                                        )}
+                                    </NavigationMenuContent>
+                                </NavigationMenuTrigger>
+                            </NavigationMenuItem>
+                        </NavigationMenu>
+                    </div>
                 </div>
+
             </div>
         </>
     )

@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import React, { useState } from 'react';
 
@@ -54,7 +53,7 @@ const Account: React.FC = () => {
               />
             </div>
             <div className='flex justify-end'>
-              <Button className='mt-5' type="submit">Editar</Button>
+              <Button className='mt-5' type="submit" onClick={handleSubmit}>Editar</Button>
             </div>
           </div>
         </div>

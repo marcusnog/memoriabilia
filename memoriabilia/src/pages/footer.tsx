@@ -1,9 +1,8 @@
-import { InstagramLogoIcon } from "@radix-ui/react-icons";
-import React from "react";
 import { FaInstagram } from "react-icons/fa6";
 import { FaFacebook } from "react-icons/fa6";
 
 function Footer() {
+
     return (
         <>
             <div className=" bottom-0 bg-black w-full h-72 transition-all duration-200">
@@ -16,9 +15,10 @@ function Footer() {
                             <a href="https://www.facebook.com/memorabiliadoesporte"><FaFacebook className="size-8 hover:animate-pulse" /></a>
                         </div>
                     </div>
+                    <div className="hidden md:flex">
                     <div className="mt-12 m-10">
                         <span className=" text-white text-3xl">
-                            Memoriabilia
+                            Memorabília
                         </span>
                         <ul className="mt-6">
                             <li className="text-white">Fale Conosco</li>
@@ -47,6 +47,7 @@ function Footer() {
                             <li className="text-white">Política de Privacidade</li>
                             <li className="text-white">Trocas / Arrependimento</li>
                         </ul>
+                    </div>
                     </div>
                 </div>
             </div>

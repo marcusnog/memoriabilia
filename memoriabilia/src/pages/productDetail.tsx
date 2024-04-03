@@ -40,7 +40,7 @@ interface Auction {
 
 const ProductDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>(); // Extrai o id da URL usando o hook useParams
-    const [product, setProduct] = useState<Product | null>(null);
+    // const [product, setProduct] = useState<Product | null>(null);
     const [auction, setAuction] = useState<Auction | null>(null);
     const [loading, setLoading] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,13 +56,13 @@ const ProductDetail: React.FC = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/auctions/${id}`);
+                const response = await fetch(`http://ec2-3-145-6-44.us-east-2.compute.amazonaws.com/api/auctions/${id}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch product');
                 }
                 const data = await response.json();
                 setAuction(data.data);
-                setProduct(data.data.products[0]);
+                // setProduct(data.data.products[0]);
                 setLoading(false);
 
                 // Format dates
@@ -102,7 +102,7 @@ const ProductDetail: React.FC = () => {
 
                 const initialBidValue = parseFloat(auction?.initial_value || "0");
                 if (bidValue >= initialBidValue) {
-                    const response = await fetch('http://127.0.0.1:8000/api/auctions/bids', {
+                    const response = await fetch('http://ec2-3-145-6-44.us-east-2.compute.amazonaws.com/api/auctions/bids', {
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${token}`,
@@ -140,10 +140,10 @@ const ProductDetail: React.FC = () => {
     };
 
     // Function to format date and time
-    const formatDateTime = (dateTimeString: string): string => {
-        const dateTime = new Date(dateTimeString);
-        return dateTime.toLocaleString(); // Use appropriate options to customize date and time format
-    };
+    // const formatDateTime = (dateTimeString: string): string => {
+    //     const dateTime = new Date(dateTimeString);
+    //     return dateTime.toLocaleString(); // Use appropriate options to customize date and time format
+    // };
 
     const checkAuthentication = () => {
         const token = localStorage.getItem('token');

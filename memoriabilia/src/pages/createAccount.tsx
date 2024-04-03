@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EnterIcon } from "@radix-ui/react-icons";
-import React from "react";
+
 
 function CreateAccount() {
     const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ function CreateAccount() {
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/user/create', {
+            const response = await fetch('http://ec2-3-145-6-44.us-east-2.compute.amazonaws.com/api/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ function CreateAccount() {
 
     return (
         <div className="flex justify-center mt-72">
-            <div className="flex justify-center border rounded-sm shadow-xl p-5 w-3/12 h-6/12">
+            <div className="w-full md:w-3/12 flex justify-center border rounded-sm shadow-xl p-5 h-6/12">
                 <div className="">
                     <span className="font-bold text-xl">
                         Bem vindo(a), Memorabília

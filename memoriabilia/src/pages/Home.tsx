@@ -1,18 +1,14 @@
-import * as React from "react";
-import { useEffect, useState, useRef } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import {
     Carousel,
     CarouselContent,
     CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@/components/ui/button";
 import '../global.css';
-import { Link } from "@radix-ui/react-navigation-menu";
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@/components/ui/navigation-menu";
 
 interface Auction {
     id: number;
@@ -58,7 +54,7 @@ function Home(): JSX.Element {
     useEffect(() => {
         const fetchAuctions = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/auctions');
+                const response = await fetch('http://ec2-3-145-6-44.us-east-2.compute.amazonaws.com/api/auctions');
                 if (!response.ok) {
                     throw new Error('Failed to fetch auctions');
                 }
@@ -145,7 +141,7 @@ function Home(): JSX.Element {
                     <span>Confira alguns dos nossos principais parceiros</span>
                 </div>
             </div>
-            <div className="flex mt-20 w-full">
+            <div className="flex mt-20 w-full space-x-4" >
                 <Carousel
                     plugins={[
                         Autoplay({
@@ -154,8 +150,8 @@ function Home(): JSX.Element {
                         }),
                     ]}
                 >
-                    <CarouselContent className="flex justify-center items-center w-full">
-                        <CarouselItem className="lg:basis-1/5"><img className="w-3/12" src="https://logopng.com.br/logos/nike-99.png" alt="logo parceiros"></img></CarouselItem>
+                    <CarouselContent className="flex w-full justify-center items-center">
+                        <CarouselItem><img className="w-3/12" src="https://logopng.com.br/logos/nike-99.png" alt="logo parceiros"></img></CarouselItem>
                         <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://logodownload.org/wp-content/uploads/2017/08/centauro-logo-00.png" alt="logo parceiros"></img></CarouselItem>
                         <CarouselItem className="lg:basis-1/5"><img className="w-4/12" src="https://upload.wikimedia.org/wikipedia/commons/2/26/SporTV_2021.png" alt="logo parceiros"></img></CarouselItem>
                         <CarouselItem className="lg:basis-1/5"><img className="w-2/12" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Escudo_Vasco_2015.png" alt="logo parceiros"></img></CarouselItem>
