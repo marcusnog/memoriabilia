@@ -51,6 +51,7 @@ interface Image {
 function Home(): JSX.Element {
     const [auctions, setAuctions] = useState<Auction[]>([]);
     const [loading, setLoading] = useState(true);
+    const [remainingTimes, setRemainingTimes] = useState<number[]>([]);
 
 
 
@@ -64,34 +65,32 @@ function Home(): JSX.Element {
                 const responseData = await response.json();
                 setAuctions(responseData.data);
                 setLoading(false);
+
+                const calculateTimeDifference = (startAt: string, endAt: string): number => {
+                    const startTime = new Date(startAt).getTime();
+                    const endTime = new Date(endAt).getTime();
+                    return Math.max(0, endTime - startTime);
+                };
+            
+
+                const times = responseData.data.map((auction: { start_at: string; end_at: string; }) => calculateTimeDifference(auction.start_at, auction.end_at));
+                setRemainingTimes(times);
+                
+                const intervalId = setInterval(() => {
+                    setRemainingTimes(auctions.map(auction => calculateTimeDifference(auction.start_at, auction.end_at)));
+                }, 1000);
+
+                
+                return () => clearInterval(intervalId);
             } catch (error) {
                 console.error('Error fetching auctions:', error);
             }
         };
         fetchAuctions();
+
     }, []);
 
-    // Função para calcular a diferença de tempo entre start_at e end_at
-    const calculateTimeDifference = (startAt: string, endAt: string): number => {
-        const startTime = new Date(startAt).getTime();
-        const endTime = new Date(endAt).getTime();
-        return Math.max(0, endTime - startTime);
-    };
 
-    // Estado para armazenar a diferença de tempo restante para cada leilão
-    const [remainingTimes, setRemainingTimes] = useState<number[]>([]);
-
-    useEffect(() => {
-        // Atualiza a diferença de tempo restante a cada segundo
-        const intervalId = setInterval(() => {
-            setRemainingTimes(auctions.map((auction) => calculateTimeDifference(auction.start_at, auction.end_at)));
-        }, 1000);
-
-        // Limpa o intervalo quando o componente é desmontado
-        return () => clearInterval(intervalId);
-    }, [auctions]);
-
-    // Função para formatar a diferença de tempo em um contador regressivo
     const formatCountdown = (difference: number): string => {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
         const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -188,33 +187,33 @@ function Home(): JSX.Element {
                         auctions.map((auction, index) => (
                             <div key={auction.id} className="m-2">
                                 <a href={`/product/${auction.products[0]?.id}`}>
-                                <div className="flex justify-center mt-20">
-                                    <span className="text-4xl font-poppins font-semibold">{auction.title}</span>
-                                </div>
-                                <NavigationMenu>
-                                    <NavigationMenuList>
-                                        <NavigationMenuItem>
-                                            <Card className="border-hidden rounded-none m-2 h-full w-72 hover:shadow-2xl mt-20">
-                                                <CardContent>
-                                                    <img className="mt-5" alt="auction" src={auction.products[0]?.images[0]?.url || 'url_da_imagem_padrao'} />
-                                                    <CardTitle className="flex justify-center mt-10 mb-2 text-xs font-light">{auction.products[0].title}</CardTitle>
-                                                    <div className="flex">
-                                                        <span className="text-sm font-poppins"><span className="font-semibold text-sm">Lance Atual:</span> R$ {auction.initial_value}</span>
-                                                    </div>
-                                                    <CardDescription>
-                                                        <div className="mt-2">
-                                                            <span className="flex text-xs font-poppins text-blue-500 font-semibold">
-                                                                <div className="flex justify-center mt-2">
-                                                                {formatCountdown(remainingTimes[index])}<p className="flex ml-1">Restante</p>
-                                                                </div>
-                                                            </span>
+                                    <div className="flex justify-center mt-20">
+                                        <span className="text-4xl font-poppins font-semibold">{auction.title}</span>
+                                    </div>
+                                    <NavigationMenu>
+                                        <NavigationMenuList>
+                                            <NavigationMenuItem>
+                                                <Card className="border-hidden rounded-none m-2 h-full w-72 hover:shadow-2xl mt-20">
+                                                    <CardContent>
+                                                        <img className="mt-5" alt="auction" src={auction.products[0]?.images[0]?.url || 'url_da_imagem_padrao'} />
+                                                        <CardTitle className="flex justify-center mt-10 mb-2 text-xs font-light">{auction.products[0].title}</CardTitle>
+                                                        <div className="flex">
+                                                            <span className="text-sm font-poppins"><span className="font-semibold text-sm">Lance Atual:</span> R$ {auction.initial_value}</span>
                                                         </div>
-                                                    </CardDescription>
-                                                </CardContent>
-                                            </Card>
-                                        </NavigationMenuItem>
-                                    </NavigationMenuList>
-                                </NavigationMenu>
+                                                        <CardDescription>
+                                                            <div className="mt-2">
+                                                                <span className="flex text-xs font-poppins text-blue-500 font-semibold">
+                                                                    <div className="flex justify-center mt-2">
+                                                                        {formatCountdown(remainingTimes[index])}<p className="flex ml-1">Restante</p>
+                                                                    </div>
+                                                                </span>
+                                                            </div>
+                                                        </CardDescription>
+                                                    </CardContent>
+                                                </Card>
+                                            </NavigationMenuItem>
+                                        </NavigationMenuList>
+                                    </NavigationMenu>
                                 </a>
                             </div>
                         ))
