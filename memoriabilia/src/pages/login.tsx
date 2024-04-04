@@ -9,6 +9,7 @@ import React, { useState } from "react";
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -21,13 +22,19 @@ function Login() {
                 body: JSON.stringify({ email, password }),
             });
             if (!response.ok) {
-                throw new Error('Failed to log in');
+                if (response.status === 302) {
+                    setError('Usuário não encontrado.');
+                } else {
+                    setError('Usuário ou senha incorretos.');
+                }
+                return;
             }
             const data = await response.json();
-            localStorage.setItem('token', data.token); 
-            window.location.href = '/'; 
+            localStorage.setItem('token', data.token);
+            window.location.href = '/';
         } catch (error) {
             console.error('Error logging in:', error);
+            setError('Ocorreu um erro ao fazer o login. Por favor, tente novamente mais tarde.');
         }
     };
 
@@ -50,6 +57,9 @@ function Login() {
                                 <span className="text-md font-sans text-emerald-900">Senha: </span>
                             </label>
                             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        </div>
+                        <div className="text-red-500 mt-2">
+                            {error && <p>{error}</p>}
                         </div>
 
                         <div className="text-blue-500 mt-5">

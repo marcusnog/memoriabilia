@@ -45,44 +45,44 @@ interface Image {
 }
 
 function Home(): JSX.Element {
-    const [auctions, setAuctions] = useState<Auction[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
-    const [remainingTimes, setRemainingTimes] = useState<number[]>([]);
+    // const [remainingTimes, setRemainingTimes] = useState<number[]>([]);
 
 
 
     useEffect(() => {
-        const fetchAuctions = async () => {
+        const fetchproducts = async () => {
             try {
-                const response = await fetch('http://ec2-3-145-6-44.us-east-2.compute.amazonaws.com/api/auctions');
+                const response = await fetch('http://ec2-3-145-6-44.us-east-2.compute.amazonaws.com/api/products');
                 if (!response.ok) {
-                    throw new Error('Failed to fetch auctions');
+                    throw new Error('Failed to fetch products');
                 }
                 const responseData = await response.json();
-                setAuctions(responseData.data);
+                setProducts(responseData.data);
                 setLoading(false);
 
-                const calculateTimeDifference = (startAt: string, endAt: string): number => {
-                    const startTime = new Date(startAt).getTime();
-                    const endTime = new Date(endAt).getTime();
-                    return Math.max(0, endTime - startTime);
-                };
+                // const calculateTimeDifference = (startAt: string, endAt: string): number => {
+                //     const startTime = new Date(startAt).getTime();
+                //     const endTime = new Date(endAt).getTime();
+                //     return Math.max(0, endTime - startTime);
+                // };
             
 
-                const times = responseData.data.map((auction: { start_at: string; end_at: string; }) => calculateTimeDifference(auction.start_at, auction.end_at));
-                setRemainingTimes(times);
+                // const times = responseData.data.map((auction: { start_at: string; end_at: string; }) => calculateTimeDifference(auction.start_at, auction.end_at));
+                // setRemainingTimes(times);
                 
-                const intervalId = setInterval(() => {
-                    setRemainingTimes(auctions.map(auction => calculateTimeDifference(auction.start_at, auction.end_at)));
-                }, 1000);
+                // const intervalId = setInterval(() => {
+                //     setRemainingTimes(products.map(products => calculateTimeDifference(products.start_at, products.end_at)));
+                // }, 1000);
 
                 
-                return () => clearInterval(intervalId);
+                // return () => clearInterval(intervalId);
             } catch (error) {
-                console.error('Error fetching auctions:', error);
+                console.error('Error fetching products:', error);
             }
         };
-        fetchAuctions();
+        fetchproducts();
 
     }, []);
 
@@ -179,29 +179,29 @@ function Home(): JSX.Element {
             <div className="flex justify-center p2 w-full mt-20">
 
                 <div className="content-center w-2/6">
-                    {!loading && Array.isArray(auctions) && auctions.length > 0 ? (
-                        auctions.map((auction, index) => (
-                            <div key={auction.id} className="m-2">
-                                <a href={`/product/${auction.products[0]?.id}`}>
+                    {!loading && Array.isArray(products) && products.length > 0 ? (
+                        products.map((products, index) => (
+                            <div key={products.id} className="m-2">
+                                <a href={`/product/${products.id}`}>
                                     <div className="flex justify-center mt-20">
-                                        <span className="text-4xl font-poppins font-semibold">{auction.title}</span>
+                                        <span className="text-4xl font-poppins font-semibold">{products.title}</span>
                                     </div>
                                     <NavigationMenu>
                                         <NavigationMenuList>
                                             <NavigationMenuItem>
                                                 <Card className="border-hidden rounded-none m-2 h-full w-72 hover:shadow-2xl mt-20">
                                                     <CardContent>
-                                                        <img className="mt-5" alt="auction" src={auction.products[0]?.images[0]?.url || 'url_da_imagem_padrao'} />
-                                                        <CardTitle className="flex justify-center mt-10 mb-2 text-xs font-light">{auction.products[0].title}</CardTitle>
+                                                        <img className="mt-5" alt="auction" src={products.images[0]?.url || 'url_da_imagem_padrao'} />
+                                                        <CardTitle className="flex justify-center mt-10 mb-2 text-xs font-light">{products.title}</CardTitle>
                                                         <div className="flex">
-                                                            <span className="text-sm font-poppins"><span className="font-semibold text-sm">Lance Atual:</span> R$ {auction.initial_value}</span>
+                                                            <span className="text-sm font-poppins"><span className="font-semibold text-sm">Lance Atual:</span> R$ {products.price}</span>
                                                         </div>
                                                         <CardDescription>
                                                             <div className="mt-2">
                                                                 <span className="flex text-xs font-poppins text-blue-500 font-semibold">
-                                                                    <div className="flex justify-center mt-2">
+                                                                    {/* <div className="flex justify-center mt-2">
                                                                         {formatCountdown(remainingTimes[index])}<p className="flex ml-1">Restante</p>
-                                                                    </div>
+                                                                    </div> */}
                                                                 </span>
                                                             </div>
                                                         </CardDescription>
@@ -220,12 +220,11 @@ function Home(): JSX.Element {
                 </div>
 
             </div>
-            {auctions.map((auction) =>
-                auction.products.length > 4 && (
+            {products.length > 4 && (
                     <div className="flex justify-center mt-32 mb-20">
                         <Button className="h-12"><span className="font-poppins text-2xl">Ver Todos</span></Button>
                     </div>
-                ))
+                )
             }
         </>
     )
