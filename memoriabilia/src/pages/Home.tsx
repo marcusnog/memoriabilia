@@ -87,14 +87,6 @@ function Home(): JSX.Element {
     }, []);
 
 
-    const formatCountdown = (difference: number): string => {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-        return `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    };
-
 
     return (
         <>
@@ -180,7 +172,7 @@ function Home(): JSX.Element {
 
                 <div className="content-center w-2/6">
                     {!loading && Array.isArray(products) && products.length > 0 ? (
-                        products.map((products, index) => (
+                        products.map((products) => (
                             <div key={products.id} className="m-2">
                                 <a href={`/product/${products.id}`}>
                                     <div className="flex justify-center mt-20">

@@ -65,6 +65,13 @@ interface Log {
     updated_at: string;
 }
 
+interface Counter {
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+}
+
 
 
 const ProductDetail: React.FC = () => {
@@ -73,7 +80,52 @@ const ProductDetail: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [bidValue, setBidValue] = useState<number>(0);
+    const [counter, setCounter] = useState<Counter>({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 60
+    });
 
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCounter((prevCounter) => {
+                if (prevCounter.seconds === 0) {
+                    if (prevCounter.minutes === 0) {
+                        if (prevCounter.hours === 0) {
+                            if (prevCounter.days === 0) {
+                                clearInterval(intervalId);
+                                return prevCounter;
+                            }
+                            return {
+                                days: prevCounter.days - 1,
+                                hours: 23,
+                                minutes: 59,
+                                seconds: 59
+                            };
+                        }
+                        return {
+                            ...prevCounter,
+                            hours: prevCounter.hours - 1,
+                            minutes: 59,
+                            seconds: 59
+                        };
+                    }
+                    return {
+                        ...prevCounter,
+                        minutes: prevCounter.minutes - 1,
+                        seconds: 59
+                    };
+                }
+                return {
+                    ...prevCounter,
+                    seconds: prevCounter.seconds - 1
+                };
+            });
+        }, 1000);
+
+        return () => clearInterval(intervalId);
+    }, []);
 
 
     useEffect(() => {
@@ -90,6 +142,7 @@ const ProductDetail: React.FC = () => {
                 const data = await response.json();
                 setProduct(data.data);
                 setLoading(false);
+
             } catch (error) {
                 console.error('Error fetching product:', error);
             }
@@ -97,6 +150,7 @@ const ProductDetail: React.FC = () => {
         fetchProduct();
     }, [id]);
 
+    // const highestBid = Math.max(...product.bids.map(bid => parseFloat(bid.value)));
 
     // useEffect(() => {
     //     const timer = setInterval(() => {
@@ -123,7 +177,7 @@ const ProductDetail: React.FC = () => {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            auction_id: product?.id,
+                            product_id: product?.id,
                             value: bidValue
                         })
                     });
@@ -159,7 +213,6 @@ const ProductDetail: React.FC = () => {
     //     return dateTime.toLocaleString(); // Use appropriate options to customize date and time format
     // };
 
-
     const checkAuthentication = () => {
         const token = localStorage.getItem('token');
         setIsLoggedIn(!!token);
@@ -174,37 +227,48 @@ const ProductDetail: React.FC = () => {
                     {product && (
                         <>
                             <div className="md:flex w-full md:justify-center">
-                                
+
                                 <div className="md:flex md:w-6/12 rounded-md md:justify-center shadow-md">
                                     <img className="w-full size-72 md:w-full md:size-72 :mt-5" alt="produto" src={product.images[0]?.url} />
                                 </div>
                                 <div className="md:items-center text-center mt-20 md:mt-0">
-                                <div className="w-full shadow-xl p-8 md:ml-10 rounded-md">
-                                    <div className="mt-5">
-                                        {/* <div className="mt-10">
-                                                <p className="text-md font-semibold text-blue-500">{formatTime(timeRemaining)} Restante</p>
-                                            </div> */}
-                                    </div>
-                                    <h2 className="font-bold text-2xl mt-10">{product.title}</h2>
-
-                                    <div className="flex justify-center mt-10 w-full rounded-md">
-                                        <p className="text-2xl">Lance Atual: R$ {product.price}</p>
-                                    </div>
-
-                                    {isLoggedIn ? (
-                                        <form className="ml-16 md:ml-0 md:mt-5 text-start" onSubmit={handleBidSubmit}>
-                                            <div className="mt-5">
-                                                <label>Lance:</label>
-                                                <Input className="w-10/12 md:w-full" type="number" placeholder="R$" value={bidValue} onChange={(e) => setBidValue(parseFloat(e.target.value))}></Input>
+                                    <div className="w-full shadow-xl p-8 md:ml-10 rounded-md">
+                                        <div className="mt-5">
+                                            <div className="flex justify-center mt-10">
+                                                {counter.seconds === 0 && counter.minutes === 0 && counter.hours === 0 && counter.days === 0 ? (
+                                                    <p className="flex justify-center font-poppins text-md font-semibold text-red-500 space-x-1">
+                                                        Leilão esgotado
+                                                    </p>
+                                                ) : (
+                                                    <p className="flex justify-center font-poppins text-md font-semibold text-blue-500 space-x-1">
+                                                        <p>{counter.days} day(s)</p>
+                                                        <p>{counter.hours} hours</p>
+                                                        <p>{counter.minutes} min</p>
+                                                        <p>{counter.seconds}s </p>
+                                                        <p>Restante</p>
+                                                    </p>
+                                                )}
                                             </div>
-                                            <div className="mt-5 flex justify-end w-5/6 md:w-full">
-                                                <Button type="submit">Enviar Lance</Button>
+                                        </div>
+                                        <h2 className="font-bold text-2xl mt-10">{product.title}</h2>
+                                        {/* <p className="text-2xl">Maior Lance: R$ {highestBid}</p> */}
+                                        <div className="flex justify-center mt-10 w-full rounded-md">
+                                            <p className="text-2xl">Lance Atual: R$ {product.price}</p>
+                                        </div>
+                                        {isLoggedIn && (counter.seconds > 0 || counter.minutes > 0 || counter.hours > 0 || counter.days > 0) && (
+                                            <div>
+                                                <form className="ml-16 md:ml-0 md:mt-5 text-start" onSubmit={handleBidSubmit}>
+                                                    <div className="mt-5">
+                                                        <label>Lance:</label>
+                                                        <Input className="w-10/12 md:w-full" type="number" placeholder="R$" value={bidValue} onChange={(e) => setBidValue(parseFloat(e.target.value))}></Input>
+                                                    </div>
+                                                    <div className="mt-5 flex justify-end w-5/6 md:w-full">
+                                                        <Button type="submit">Enviar Lance</Button>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </form>
-                                    ) : (
-                                        <div className="hidden"></div>
-                                    )}
-                                </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             <div className="flex justify-center md:w-full">
@@ -227,7 +291,7 @@ const ProductDetail: React.FC = () => {
                                         </Table>
                                     </TabsContent>
                                     <TabsContent value="logs" className="flex justify-center w-full">
-                                        <div className="w-full flex justify-start">
+                                        <div className="w-full">
                                             {product.logs.map((log, index) => (
                                                 <div key={index}>
                                                     <Table>
