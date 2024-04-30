@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import '../global.css';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@/components/ui/navigation-menu";
 
+
 interface Auction {
     id: number;
     title: string;
@@ -44,14 +45,71 @@ interface Image {
     updated_at: string;
 }
 
+interface Counter {
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+}
+
 function Home(): JSX.Element {
+
+    
+    
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     // const [remainingTimes, setRemainingTimes] = useState<number[]>([]);
+    const [counter, setCounter] = useState<Counter>({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 60
+    });
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCounter((prevCounter) => {
+                if (prevCounter.seconds === 0) {
+                    if (prevCounter.minutes === 0) {
+                        if (prevCounter.hours === 0) {
+                            if (prevCounter.days === 0) {
+                                clearInterval(intervalId);
+                                return prevCounter;
+                            }
+                            return {
+                                days: prevCounter.days - 1,
+                                hours: 23,
+                                minutes: 59,
+                                seconds: 59
+                            };
+                        }
+                        return {
+                            ...prevCounter,
+                            hours: prevCounter.hours - 1,
+                            minutes: 59,
+                            seconds: 59
+                        };
+                    }
+                    return {
+                        ...prevCounter,
+                        minutes: prevCounter.minutes - 1,
+                        seconds: 59
+                    };
+                }
+                return {
+                    ...prevCounter,
+                    seconds: prevCounter.seconds - 1
+                };
+            });
+        }, 1000);
+
+        return () => clearInterval(intervalId);
+    }, []);
 
 
 
     useEffect(() => {
+        
         const fetchproducts = async () => {
             try {
                 const response = await fetch('http://ec2-3-145-6-44.us-east-2.compute.amazonaws.com/api/products');
@@ -191,9 +249,19 @@ function Home(): JSX.Element {
                                                         <CardDescription>
                                                             <div className="mt-2">
                                                                 <span className="flex text-xs font-poppins text-blue-500 font-semibold">
-                                                                    {/* <div className="flex justify-center mt-2">
-                                                                        {formatCountdown(remainingTimes[index])}<p className="flex ml-1">Restante</p>
-                                                                    </div> */}
+                                                                    {counter.seconds === 0 && counter.minutes === 0 && counter.hours === 0 && counter.days === 0 ? (
+                                                                        <p className="flex justify-center font-poppins text-sm font-bold text-red-500 space-x-1">
+                                                                            Leilão esgotado
+                                                                        </p>
+                                                                    ) : (
+                                                                        <p className="flex justify-center font-poppins text-md font-light text-blue-500 space-x-1">
+                                                                            <p>{counter.days} day(s)</p>
+                                                                            <p>{counter.hours} hours</p>
+                                                                            <p>{counter.minutes} min</p>
+                                                                            <p>{counter.seconds}s </p>
+                                                                            <p>Restante</p>
+                                                                        </p>
+                                                                    )}
                                                                 </span>
                                                             </div>
                                                         </CardDescription>
