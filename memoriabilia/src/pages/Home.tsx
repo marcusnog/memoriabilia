@@ -67,16 +67,16 @@ function Home(): JSX.Element {
                 //     const endTime = new Date(endAt).getTime();
                 //     return Math.max(0, endTime - startTime);
                 // };
-            
+
 
                 // const times = responseData.data.map((auction: { start_at: string; end_at: string; }) => calculateTimeDifference(auction.start_at, auction.end_at));
                 // setRemainingTimes(times);
-                
+
                 // const intervalId = setInterval(() => {
                 //     setRemainingTimes(products.map(products => calculateTimeDifference(products.start_at, products.end_at)));
                 // }, 1000);
 
-                
+
                 // return () => clearInterval(intervalId);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -90,7 +90,7 @@ function Home(): JSX.Element {
 
     return (
         <>
-            <div className="justify-center p-5 mt-72 w-6/6 h-2/6">
+            <div className="justify-center mt-96 w-6/6 h-2/6">
                 <Carousel
                     plugins={[
                         Autoplay({
@@ -102,8 +102,8 @@ function Home(): JSX.Element {
                         <CarouselItem>
                             <div className="p-1">
                                 <Card>
-                                    <CardContent className="flex items-center justify-center">
-                                        <img alt="banner" src="https://memorabiliadoesporte.com.br/wp-content/uploads/2023/11/socialmedia_cardautogtafado-1.jpg" />
+                                    <CardContent>
+                                        <img alt="banner" className="size-full" src="https://memorabiliadoesporte.com.br/wp-content/uploads/2023/11/socialmedia_cardautogtafado-1.jpg" />
                                     </CardContent>
                                 </Card>
                             </div>
@@ -111,8 +111,8 @@ function Home(): JSX.Element {
                         <CarouselItem>
                             <div className="p-1">
                                 <Card>
-                                    <CardContent className="flex items-center justify-center">
-                                        <img alt="banner" src="https://memorabiliadoesporte.com.br/wp-content/uploads/2023/11/socialmedia_cardautogtafado-1.jpg" />
+                                    <CardContent>
+                                        <img alt="banner" className="size-full" src="https://memorabiliadoesporte.com.br/wp-content/uploads/2023/11/socialmedia_cardautogtafado-1.jpg" />
                                     </CardContent>
                                 </Card>
                             </div>
@@ -213,10 +213,10 @@ function Home(): JSX.Element {
 
             </div>
             {products.length > 4 && (
-                    <div className="flex justify-center mt-32 mb-20">
-                        <Button className="h-12"><span className="font-poppins text-2xl">Ver Todos</span></Button>
-                    </div>
-                )
+                <div className="flex justify-center mt-32 mb-20">
+                    <Button className="h-12"><span className="font-poppins text-2xl">Ver Todos</span></Button>
+                </div>
+            )
             }
         </>
     )
