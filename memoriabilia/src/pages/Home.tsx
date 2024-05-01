@@ -54,8 +54,8 @@ interface Counter {
 
 function Home(): JSX.Element {
 
-    
-    
+
+
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     // const [remainingTimes, setRemainingTimes] = useState<number[]>([]);
@@ -109,7 +109,7 @@ function Home(): JSX.Element {
 
 
     useEffect(() => {
-        
+
         const fetchproducts = async () => {
             try {
                 const response = await fetch('http://ec2-3-145-6-44.us-east-2.compute.amazonaws.com/api/products');
@@ -118,24 +118,8 @@ function Home(): JSX.Element {
                 }
                 const responseData = await response.json();
                 setProducts(responseData.data);
+                console.log("produtos", responseData.data);
                 setLoading(false);
-
-                // const calculateTimeDifference = (startAt: string, endAt: string): number => {
-                //     const startTime = new Date(startAt).getTime();
-                //     const endTime = new Date(endAt).getTime();
-                //     return Math.max(0, endTime - startTime);
-                // };
-
-
-                // const times = responseData.data.map((auction: { start_at: string; end_at: string; }) => calculateTimeDifference(auction.start_at, auction.end_at));
-                // setRemainingTimes(times);
-
-                // const intervalId = setInterval(() => {
-                //     setRemainingTimes(products.map(products => calculateTimeDifference(products.start_at, products.end_at)));
-                // }, 1000);
-
-
-                // return () => clearInterval(intervalId);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -232,14 +216,15 @@ function Home(): JSX.Element {
                     {!loading && Array.isArray(products) && products.length > 0 ? (
                         products.map((products) => (
                             <div key={products.id} className="m-2">
-                                <a href={`/product/${products.id}`}>
-                                    <div className="flex justify-center mt-20">
-                                        <span className="text-4xl font-poppins font-semibold">{products.title}</span>
-                                    </div>
-                                    <NavigationMenu>
-                                        <NavigationMenuList>
-                                            <NavigationMenuItem>
-                                                <Card className="border-hidden rounded-none m-2 h-full w-72 hover:shadow-2xl mt-20">
+
+                                <div className="flex justify-center mt-20">
+                                    <span className="text-4xl font-poppins font-semibold">{products.title}</span>
+                                </div>
+                                <NavigationMenu>
+                                    <NavigationMenuList>
+                                        <NavigationMenuItem>
+                                            <Card className="border-hidden rounded-none m-2 h-full w-72 hover:shadow-2xl mt-20">
+                                                <a href={`/product/${products.id}`}>
                                                     <CardContent>
                                                         <img className="mt-5" alt="auction" src={products.images[0]?.url || 'url_da_imagem_padrao'} />
                                                         <CardTitle className="flex justify-center mt-10 mb-2 text-xs font-light">{products.title}</CardTitle>
@@ -266,11 +251,12 @@ function Home(): JSX.Element {
                                                             </div>
                                                         </CardDescription>
                                                     </CardContent>
-                                                </Card>
-                                            </NavigationMenuItem>
-                                        </NavigationMenuList>
-                                    </NavigationMenu>
-                                </a>
+                                                </a>
+                                            </Card>
+                                        </NavigationMenuItem>
+                                    </NavigationMenuList>
+                                </NavigationMenu>
+
                             </div>
                         ))
                     ) : (
