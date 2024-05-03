@@ -209,65 +209,87 @@ function Home(): JSX.Element {
                     </CarouselContent>
                 </Carousel>
             </div>
+            <div className="flex justify-center mt-20">
+                <span className="text-4xl font-poppins font-semibold">Campanha Teste</span>
+            </div>
+            <Carousel
+                plugins={[
+                    Autoplay({
+                        delay: 3000,
+                        playOnInit: true,
+                    }),
+                ]}
+            >
+                <CarouselContent>
+                    <CarouselItem>
+                        <div className="flex p2 w-full">
 
-            <div className="flex justify-center p2 w-full mt-20">
+                            <div className="flex justify-center w-2/6">
+                                {!loading && Array.isArray(products) && products.length > 0 ? (
+                                    products.map((products) => (
+                                        <div key={products.id} className="m-2">
 
-                <div className="content-center w-2/6">
-                    {!loading && Array.isArray(products) && products.length > 0 ? (
-                        products.map((products) => (
-                            <div key={products.id} className="m-2">
+                                            <div className="flex justify-center mt-20">
+                                                <span className="text-4xl font-poppins font-semibold hidden">{products.title}</span>
+                                            </div>
+                                            <NavigationMenu>
+                                                <NavigationMenuList>
+                                                    <NavigationMenuItem>
+                                                        <Card className="border-hidden rounded-none m-2 h-full w-72 hover:shadow-2xl mt-20">
+                                                            <a href={`/product/${products.id}`}>
+                                                                <CardContent>
+                                                                    <img className="mt-5" alt="auction" src={products.images[0]?.url || 'url_da_imagem_padrao'} />
+                                                                    <CardTitle className="flex justify-center mt-10 mb-2 text-xs font-light">{products.title}</CardTitle>
+                                                                    <div className="flex">
+                                                                        <span className="text-sm font-poppins"><span className="font-semibold text-sm">Lance Atual:</span> R$ {products.price}</span>
+                                                                    </div>
+                                                                    <CardDescription>
+                                                                        <div className="mt-2">
+                                                                            <span className="flex text-xs font-poppins text-blue-500 font-semibold">
+                                                                                {counter.seconds === 0 && counter.minutes === 0 && counter.hours === 0 && counter.days === 0 ? (
+                                                                                    <p className="flex justify-center font-poppins text-sm font-bold text-red-500 space-x-1">
+                                                                                        Leilão esgotado
+                                                                                    </p>
+                                                                                ) : (
+                                                                                    <p className="flex justify-center font-poppins text-md font-light text-blue-500 space-x-1">
+                                                                                        <p>{counter.days} day(s)</p>
+                                                                                        <p>{counter.hours} hours</p>
+                                                                                        <p>{counter.minutes} min</p>
+                                                                                        <p>{counter.seconds}s </p>
+                                                                                        <p>Restante</p>
+                                                                                    </p>
+                                                                                )}
+                                                                            </span>
+                                                                        </div>
+                                                                    </CardDescription>
+                                                                </CardContent>
+                                                            </a>
+                                                        </Card>
+                                                    </NavigationMenuItem>
+                                                </NavigationMenuList>
+                                            </NavigationMenu>
+                                        </div>
 
-                                <div className="flex justify-center mt-20">
-                                    <span className="text-4xl font-poppins font-semibold">{products.title}</span>
-                                </div>
-                                <NavigationMenu>
-                                    <NavigationMenuList>
-                                        <NavigationMenuItem>
-                                            <Card className="border-hidden rounded-none m-2 h-full w-72 hover:shadow-2xl mt-20">
-                                                <a href={`/product/${products.id}`}>
-                                                    <CardContent>
-                                                        <img className="mt-5" alt="auction" src={products.images[0]?.url || 'url_da_imagem_padrao'} />
-                                                        <CardTitle className="flex justify-center mt-10 mb-2 text-xs font-light">{products.title}</CardTitle>
-                                                        <div className="flex">
-                                                            <span className="text-sm font-poppins"><span className="font-semibold text-sm">Lance Atual:</span> R$ {products.price}</span>
-                                                        </div>
-                                                        <CardDescription>
-                                                            <div className="mt-2">
-                                                                <span className="flex text-xs font-poppins text-blue-500 font-semibold">
-                                                                    {counter.seconds === 0 && counter.minutes === 0 && counter.hours === 0 && counter.days === 0 ? (
-                                                                        <p className="flex justify-center font-poppins text-sm font-bold text-red-500 space-x-1">
-                                                                            Leilão esgotado
-                                                                        </p>
-                                                                    ) : (
-                                                                        <p className="flex justify-center font-poppins text-md font-light text-blue-500 space-x-1">
-                                                                            <p>{counter.days} day(s)</p>
-                                                                            <p>{counter.hours} hours</p>
-                                                                            <p>{counter.minutes} min</p>
-                                                                            <p>{counter.seconds}s </p>
-                                                                            <p>Restante</p>
-                                                                        </p>
-                                                                    )}
-                                                                </span>
-                                                            </div>
-                                                        </CardDescription>
-                                                    </CardContent>
-                                                </a>
-                                            </Card>
-                                        </NavigationMenuItem>
-                                    </NavigationMenuList>
-                                </NavigationMenu>
+
+                                    ))
+                                ) : (
+                                    <div className="text-center">Não há leilões disponíveis no momento.</div>
+                                )}
 
                             </div>
-                        ))
-                    ) : (
-                        <div className="text-center">Não há leilões disponíveis no momento.</div>
-                    )}
 
-                </div>
+                        </div>
 
-            </div>
+                        <div>
+
+                        </div>
+
+                    </CarouselItem>
+
+                </CarouselContent>
+            </Carousel>
             {products.length > 4 && (
-                <div className="flex justify-center mt-32 mb-20">
+                <div className="flex justify-center mb-20">
                     <Button className="h-12"><span className="font-poppins text-2xl">Ver Todos</span></Button>
                 </div>
             )
